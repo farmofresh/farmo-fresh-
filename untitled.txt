@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Farm Fresh</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f5f5f5;
+}
+
+#logo{
+text-align:center;
+font-size:30px;
+padding:40px;
+color:green;
+}
+
+.products{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+padding:10px;
+}
+
+.card{
+background:white;
+padding:10px;
+border-radius:10px;
+}
+
+.card img{
+width:100%;
+border-radius:10px;
+}
+
+button{
+background:green;
+color:white;
+border:none;
+padding:8px;
+border-radius:6px;
+}
+
+.cart{
+position:fixed;
+bottom:0;
+background:white;
+width:100%;
+padding:10px;
+box-shadow:0 -2px 10px rgba(0,0,0,0.2);
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="logo">Farm Fresh</div>
+
+<div class="products" id="products"></div>
+
+<div class="cart">
+Total: ₹<span id="total">0</span>
+<button onclick="checkout()">Checkout</button>
+</div>
+
+<script>
+
+let products = JSON.parse(localStorage.getItem("products")) || [];
+
+let cart = [];
+
+function showProducts(){
+
+let html="";
+
+products.forEach((p,i)=>{
+
+html+=`
+<div class="card">
+<img src="${p.image}">
+<h3>${p.name}</h3>
+₹${p.price}<br>
+Farmer: ${p.farmer}<br>
+Village: ${p.village}<br><br>
+<button onclick="addCart(${i})">ADD</button>
+</div>
+`;
+
+});
+
+document.getElementById("products").innerHTML=html;
+
+}
+
+function addCart(i){
+
+cart.push(products[i]);
+
+updateTotal();
+
+}
+
+function updateTotal(){
+
+let total=0;
+
+cart.forEach(p=>{
+total+=Number(p.price);
+});
+
+document.getElementById("total").innerText=total+20;
+
+}
+
+function checkout(){
+
+let name=prompt("Enter Name");
+
+let mobile=prompt("Enter Mobile Number");
+
+let location=prompt("Enter Location");
+
+alert("Order Confirmed\nDelivery Soon");
+
+}
+
+showProducts();
+
+</script>
+
+</body>
+</html>
